@@ -1,0 +1,31 @@
+{
+  "name": "usermanagementsystem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Faheem-T/UserManagementSystem.git"
+  },
+  "keywords": [
+    "user",
+    "management",
+    "system",
+    "roles"
+  ],
+  "author": "Faheem",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Faheem-T/UserManagementSystem/issues"
+  },
+  "homepage": "https://github.com/Faheem-T/UserManagementSystem#readme",
+  "dependencies": {
+    "express": "^4.21.1",
+    "express-session": "^1.18.1",
+    "pug": "^3.0.3"
+  }
+}

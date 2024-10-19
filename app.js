@@ -1,7 +1,20 @@
 import express from "express";
 import session from "express-session";
+import mongoose from "mongoose";
+
+import router from "./routes/index.js";
 
 const port = 3000;
+
+// MongoDB connection
+mongoose
+  .connect("mongodb://localhost/userManagement")
+  .then(console.log("Connected to MongoDB"))
+  .catch((err) => {
+    console.log(err);
+  });
+
+
 
 const app = express();
 
@@ -14,8 +27,10 @@ app.use(
   })
 );
 
+app.use(router);
+
 app.listen(port, () => {
-  console.log(`App running on http://localhost:${port}`);
+  console.log(`app running on http://localhost:${port}`);
 });
 
 /*

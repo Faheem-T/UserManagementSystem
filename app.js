@@ -46,6 +46,10 @@ app.use(passport.session());
 
 app.use(router);
 
+app.get("/", (req, res) => {
+  res.redirect("/signup");
+});
+
 app.listen(port, () => {
   console.log(`app running on http://localhost:${port}`);
 });

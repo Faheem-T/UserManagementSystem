@@ -6,6 +6,15 @@ const UserSchema = new Schema({
     required: true,
     unique: true,
   },
+  email: {
+    type: Schema.Types.String,
+    required: true,
+    unique: true,
+    match: [
+      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+      "Please enter a valid email address",
+    ],
+  },
   displayName: Schema.Types.String,
   password: {
     type: Schema.Types.String,

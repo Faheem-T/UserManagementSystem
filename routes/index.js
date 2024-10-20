@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { User } from "../models/userModel.js";
 import { compareHash, hashPassword } from "../helpers/hashPassword.js";
+import signUp from "./signup.js";
 
 // const testingDB = async () => {
 //   const user = new User({
@@ -27,5 +28,7 @@ import { compareHash, hashPassword } from "../helpers/hashPassword.js";
 // testingHash();
 
 const router = Router();
+
+router.use("/signup", signUp);
 
 export default router;

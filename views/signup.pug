@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  div.container-fluid.d-flex.flex-column.align-items-center.justify-content-center(style="height:85vh")
+    h1 LOGIN
+    form.d-flex.flex-column(action="/login", method="POST")
+      label.form-label(for="username") Username
+      input.form-control#username(type="text", name="username", required)
+
+      label.form-label(for="email") Email
+      input.form-control#email(type="email", name="email", required)
+
+      label.form-label(for="displayName") Display Name
+      input.form-control#displayName(type="text", name="displayName")
+
+      label.form-label(for="password") Password
+      input.form-control#password(type="password", name="password")
+
+      button.btn.btn-primary(type="submit", value="SignUp") Sign Up

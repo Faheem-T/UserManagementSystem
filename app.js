@@ -3,6 +3,7 @@ import session from "express-session";
 import mongoose from "mongoose";
 
 import router from "./routes/index.js";
+import passport from "passport";
 
 const port = 3000;
 
@@ -14,8 +15,6 @@ mongoose
     console.log(err);
   });
 
-
-
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
@@ -26,6 +25,9 @@ app.use(
     resave: false,
   })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(router);
 
@@ -46,5 +48,11 @@ How can I do this?
   - on POSTing to these routes, add the information 
   to database but pass "user" / "admin" according
   to the route for the "role" field.
+
+WAIT... what if
+instead of two signup pages, theres just one and 
+add a checkbox that says "Admin?".
+If this is checked, add "admin" role. 
+Else, add "user" role.
 
 */

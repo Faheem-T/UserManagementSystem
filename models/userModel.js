@@ -15,7 +15,6 @@ const UserSchema = new Schema({
       "Please enter a valid email address",
     ],
   },
-  displayName: Schema.Types.String,
   password: {
     type: Schema.Types.String,
     required: true,

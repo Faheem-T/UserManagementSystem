@@ -1,11 +1,18 @@
 import express from "express";
 import session from "express-session";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 
 import router from "./routes/index.js";
 import passport from "passport";
 
 const port = 3000;
+
+import * as url from "url";
+import morgan from "morgan";
+import path from "path";
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 // MongoDB connection
 mongoose
@@ -18,6 +25,9 @@ mongoose
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(cookieParser());
+app.use(morgan("dev"));
 app.use(
   session({
     secret: "BIGsecret",
@@ -26,6 +36,11 @@ app.use(
   })
 );
 
+// pug config
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "views"));
+
+// passport initialization
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -35,7 +50,7 @@ app.listen(port, () => {
   console.log(`app running on http://localhost:${port}`);
 });
 
-/*
+/* IDEAS
 How the app is going to work
 
 main page has - user signup - and - admin signup -
@@ -55,4 +70,8 @@ add a checkbox that says "Admin?".
 If this is checked, add "admin" role. 
 Else, add "user" role.
 
+*/
+
+/* TODO
+  1) Add session storage
 */

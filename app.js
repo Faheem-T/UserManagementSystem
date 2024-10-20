@@ -2,9 +2,9 @@ import express from "express";
 import session from "express-session";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import passport from "passport";
 
 import router from "./routes/index.js";
-import passport from "passport";
 
 const port = 3000;
 

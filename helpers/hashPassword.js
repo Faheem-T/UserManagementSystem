@@ -8,5 +8,5 @@ export const hashPassword = (password) => {
 };
 
 export const compareHash = (password, hash) => {
-  return bcrypt.compareSync(password, hash)
-}
+  return bcrypt.compareSync(password, hash);
+};

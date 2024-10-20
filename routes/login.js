@@ -10,6 +10,7 @@ router.post("/", passport.authenticate("local"), (req, res) => {
 });
 
 router.get("/", (req, res) => {
+  if (req.isAuthenticated()) return res.redirect("/home");
   res.render("login", { title: "Login" });
 });
 

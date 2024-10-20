@@ -5,6 +5,7 @@ import { hashPassword } from "../helpers/hashPassword.js";
 const router = Router();
 
 router.get("/", (req, res) => {
+  if (req.isAuthenticated()) return res.redirect("/home");
   res.render("signup");
 });
 

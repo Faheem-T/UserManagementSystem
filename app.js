@@ -3,6 +3,7 @@ import session from "express-session";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import passport from "passport";
+import nocache from "nocache";
 
 import router from "./routes/index.js";
 
@@ -36,6 +37,7 @@ app.use(
     resave: false,
   })
 );
+app.use(nocache());
 
 // pug config
 app.set("view engine", "pug");
@@ -48,7 +50,7 @@ app.use(passport.session());
 app.use(router);
 
 app.get("/", (req, res) => {
-  res.redirect("/signup");
+  res.redirect("/login");
 });
 
 app.listen(port, () => {

@@ -30,9 +30,22 @@ export const user_login_get = (req, res) => {
   res.render("login", { title: "Login", errors: res.locals.error });
 };
 
-export const user_home_get = (req, res) => {
+export const user_home_get = async (req, res) => {
+  const name = req.user.username;
   if (req.user.role === "admin") {
-    return res.render("adminPage");
+    const users = await User.find({ role: "user" });
+    return res.render("adminPage", { users, name });
   }
-  return res.render("userPage");
+  return res.render("userPage", { name });
+};
+
+export const user_logout_get = (req, res) => {
+  console.log("logout");
+  req.logout((err) => {
+    if (err) {
+      console.log("error");
+      return res.sendStatus(400);
+    }
+    res.redirect("/");
+  });
 };

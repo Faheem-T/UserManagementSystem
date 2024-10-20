@@ -1,4 +1,10 @@
 extends layout
 
 block content
-  h1 ADMIN YAYY
+  h1 ADMIN PAGE
+  h2 Welcome #{name}
+  a(href="/logout") Log Out
+  if users
+  ul
+    for user in users
+      li!= user.username

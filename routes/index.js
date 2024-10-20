@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { User } from "../models/userModel.js";
 import { compareHash, hashPassword } from "../helpers/hashPassword.js";
-import signUp from "./signup.js";
+import signupRoute from "./signup.js";
+import homeRoute from "./home.js";
+import loginRoute from "./login.js";
 
 // const testingDB = async () => {
 //   const user = new User({
@@ -29,6 +31,8 @@ import signUp from "./signup.js";
 
 const router = Router();
 
-router.use("/signup", signUp);
+router.use("/signup", signupRoute);
+router.use("/home", homeRoute);
+router.use("/login", loginRoute);
 
 export default router;

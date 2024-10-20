@@ -67,7 +67,8 @@ app.listen(port, () => {
   console.log(`app running on http://localhost:${port}`);
 });
 
-/* IDEAS
+/*
+IDEAS
 How the app is going to work
 
 main page has - user signup - and - admin signup -
@@ -89,6 +90,20 @@ Else, add "user" role.
 
 */
 
-/* TODO
+/*
+HOW TO RENDER HOME PAGE FOR USERS?
+a successful login redirects to "/home"
+so from "/home" we check:
+  if "admin":
+    redirect to "/adminpage"
+  else:
+    redirect to "/userpage"
+
+How to check if "admin"?
+  req.user.role
+*/
+
+/* 
+TODO
   1) Add session storage
 */

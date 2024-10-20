@@ -7,7 +7,7 @@ export const user_signup_post = async (req, res) => {
   const user = new User(body);
   try {
     await user.save();
-    res.status(200).redirect("/home");
+    res.status(200).redirect("/login");
   } catch (err) {
     console.log(err);
     req.flash("error", err.message);
@@ -28,4 +28,11 @@ export const user_login_post = (req, res) => {
 export const user_login_get = (req, res) => {
   if (req.isAuthenticated()) return res.redirect("/home");
   res.render("login", { title: "Login", errors: res.locals.error });
+};
+
+export const user_home_get = (req, res) => {
+  if (req.user.role === "admin") {
+    return res.render("adminPage");
+  }
+  return res.render("userPage");
 };

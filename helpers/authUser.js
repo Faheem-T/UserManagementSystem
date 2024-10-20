@@ -3,6 +3,6 @@ export const authenticationMiddleware = () => {
     if (req.isAuthenticated()) {
       return next();
     }
-    res.redirect("/");
+    res.redirect("/login");
   };
 };

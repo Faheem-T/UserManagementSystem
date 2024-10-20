@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  div.container-fluid.d-flex.flex-column.align-items-center.justify-content-center(style="height:85vh")
+  div.container-fluid.d-flex.flex-column.align-items-center.justify-content-center#main
     h1 SIGN UP
     form.d-flex.flex-column(action="/signup", method="POST")
       div.md-3
@@ -22,3 +22,8 @@ block content
         label.form-label(for="role") Admin?
 
       button.btn.btn-primary(type="submit", value="SignUp") Sign Up
+  div.container-fluid.d-flex-flex-column.align-items-center.justify-content-center#sub
+    if errors
+      ul
+        for error in errors
+          li.alert.alert-danger!= error

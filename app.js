@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import nocache from "nocache";
+import flash from "connect-flash";
 
 import router from "./routes/index.js";
 
@@ -38,6 +39,15 @@ app.use(
   })
 );
 app.use(nocache());
+
+// Setting up flash messages
+app.use(flash());
+// Storing the error to res.locals.error so
+// that it is accessible everywhere in the app
+app.use((req, res, next) => {
+  res.locals.error = req.flash("error");
+  next();
+});
 
 // pug config
 app.set("view engine", "pug");

@@ -1,17 +1,22 @@
 import { Router } from "express";
 import passport from "passport";
 import "../strategies/local-strategy.js";
+import {
+  user_login_get,
+  user_login_post,
+} from "../controllers/userController.js";
 
 const router = Router();
 
-router.post("/", passport.authenticate("local"), (req, res) => {
-  console.log(req.user);
-  res.status(200).redirect("/home");
-});
+router.post(
+  "/",
+  passport.authenticate("local", {
+    failureFlash: true,
+    failureRedirect: "/login",
+  }),
+  user_login_post
+);
 
-router.get("/", (req, res) => {
-  if (req.isAuthenticated()) return res.redirect("/home");
-  res.render("login", { title: "Login" });
-});
+router.get("/", user_login_get);
 
 export default router;

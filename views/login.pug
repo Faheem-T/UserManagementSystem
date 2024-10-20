@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  div.container-fluid.d-flex.flex-column.align-items-center.justify-content-center(style="height:85vh")
+  div.container-fluid.d-flex.flex-column.align-items-center.justify-content-center#main
     h1 LOGIN
     form.d-flex.flex-column(action="/login", method="POST")
       div.md-3
@@ -12,3 +12,11 @@ block content
         input.form-control#password(type="password", name="password", required)
 
       button.btn.btn-primary(type="submit", value="login") Login
+  div.container-fluid.d-flex-flex-column.align-items-center.justify-content-center#sub
+    if errors
+      ul
+        for error in errors
+          li.alert.alert-danger!= error
+
+  script
+    

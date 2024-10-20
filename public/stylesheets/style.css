@@ -3,10 +3,23 @@
   padding: 0;
 }
 
+form {
+  width: 60%;
+}
+
+li {
+  list-style-type: none;
+}
+
 .form-control {
   margin-bottom: 20px;
 }
 
-form {
-  width: 60%;
+#main {
+  height: 85vh;
+}
+
+#sub {
+  height: 10vh;
+  width: 50vw;
 }

@@ -2,25 +2,16 @@ import { Router } from "express";
 import { User } from "../models/userModel.js";
 import { hashPassword } from "../helpers/hashPassword.js";
 
+import {
+  user_signup_get,
+  user_signup_post,
+} from "../controllers/userController.js";
+
 const router = Router();
 
-router.get("/", (req, res) => {
-  if (req.isAuthenticated()) return res.redirect("/home");
-  res.render("signup");
-});
+router.get("/", user_signup_get);
 
-router.post("/", async (req, res) => {
-  const { body } = req;
-  body.password = hashPassword(body.password);
-  const user = new User(body);
-  try {
-    await user.save();
-    res.status(200).redirect("/home");
-  } catch (err) {
-    console.log(err);
-    res.status(400).redirect("/");
-  }
-});
+router.post("/", user_signup_post);
 
 export default router;
 

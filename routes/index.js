@@ -1,15 +1,39 @@
 import { Router } from "express";
+import passport from "passport";
 
-import signupRoute from "./signup.js";
-import homeRoute from "./home.js";
-import loginRoute from "./login.js";
-import logoutRoute from "./logout.js";
+import {
+  user_home_get,
+  user_login_get,
+  user_login_post,
+  user_logout_get,
+  user_signup_get,
+  user_signup_post,
+} from "../controllers/userController.js";
+
+import { authenticationMiddleware } from "../helpers/authUser.js";
 
 const router = Router();
 
-router.use("/signup", signupRoute);
-router.use("/home", homeRoute);
-router.use("/login", loginRoute);
-router.use("/logout", logoutRoute);
+// signup
+router.get("/signup", user_signup_get);
+router.post("/signup", user_signup_post);
+
+// login
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    failureFlash: true,
+    failureRedirect: "/login",
+  }),
+  user_login_post
+);
+
+router.get("/login", user_login_get);
+
+// logout
+router.get("/logout", authenticationMiddleware(), user_logout_get);
+
+// home
+router.get("/home", authenticationMiddleware(), user_home_get);
 
 export default router;

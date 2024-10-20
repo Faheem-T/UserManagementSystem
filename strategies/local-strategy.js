@@ -1,6 +1,7 @@
 import { Strategy } from "passport-local";
 import { User } from "../models/userModel";
 import passport from "passport";
+import { compareHash } from "../helpers/hashPassword";
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -16,7 +17,7 @@ export default passport.use(
   new Strategy(async (username, password, done) => {
     const foundUser = await User.find({ username });
     if (!foundUser) return done(null, false, { message: "User not found" });
-    if (foundUser.password !== password)
+    if (!compareHash(password, foundUser.password))
       return done(null, false, { message: "Invalid credentials" });
     done(null, foundUser);
   })

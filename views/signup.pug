@@ -22,8 +22,8 @@ block content
       div.mt-3.text-center
         p Already registered? 
           a(href="/login") Login
-  div.container-fluid.d-flex-flex-column.align-items-center.justify-content-center#sub
-    if errors
-      ul
-        for error in errors
-          li.alert.alert-danger!= error
+  
+  // import toast mixin
+  include mixins/toast
+  // mixin to render error
+  +toast(errors)

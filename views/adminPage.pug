@@ -5,6 +5,23 @@ block content
   h2 Welcome #{name}
   a(href="/logout") Log Out
   if users
-  ul
-    for user in users
-      li!= user.username
+    table.table.table-striped.table-hover
+      thead  
+        tr 
+          th ID
+          th Username
+          th email
+          th
+          th
+      for user in users
+        tr
+          td!=user.id
+          td!=user.username
+          td!=user.email
+          td
+            a(href="delete/") Edit
+          td
+            a Delete
+  
+  else
+    div The are no users...

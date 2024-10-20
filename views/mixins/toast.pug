@@ -1,0 +1,20 @@
+mixin toast(messages)
+  if messages
+    for message, index in messages
+      div.toast-container.position-fixed.bottom-0.end-0.p-3(style='width:100vw;')
+        div.toast(role='alert' aria-live='assertive' aria-atomic='true' id=`toast-${index}`)
+          div.toast-header
+            strong.me-auto Alert
+            small.text-muted.mx-auto Just now
+          div.toast-body!=message
+  script.
+    document.addEventListener("DOMContentLoaded", function() {
+      const toastList = document.querySelectorAll(".toast");
+      toastList.forEach((toastEl) => {
+        const toast = new bootstrap.Toast(toastEl, {
+          delay: 2000
+        });
+        toast.show();
+      })
+    })
+    

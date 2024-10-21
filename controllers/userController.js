@@ -74,3 +74,30 @@ export const user_delete_get = async (req, res) => {
   req.flash("success", "User deleted successfully");
   res.redirect("/home");
 };
+
+export const user_edit_get = async (req, res) => {
+  if (!(req.user.role === "admin")) res.redirect("/");
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id);
+    res.render("userEdit", { user });
+  } catch (err) {
+    req.flash("error", "Error: something went wrong");
+    res.status(400);
+    req.redirect("/home");
+  }
+};
+
+export const user_edit_post = async (req, res) => {
+  const { id, username, email } = req.body;
+  try {
+    await User.findByIdAndUpdate(id, { username, email });
+    req.flash("success", "User updated successfully!");
+    res.status(200);
+    res.redirect("/home");
+  } catch (err) {
+    req.flash("error", "Error: something went wrong");
+    res.status(400);
+    req.redirect("/home");
+  }
+};

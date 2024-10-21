@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  div.container-fluid.d-flex.flex-column.align-items-center.justify-content-center#main
+    h1 Edit User
+    form.d-flex.flex-column(action="/editUser", method="POST")
+      input(type="hidden", name="id", value=(user===undefined ? '' : user.id))
+      div.md-3
+        label.form-label(for="username") Username
+        input.form-control#username(type="text", name="username", required, value=(user===undefined ? '' : user.username))
+      div.md-3      
+        label.form-label(for="email") Email
+        input.form-control#email(type="email", name="email", required, value=(user===undefined ? '' : user.email))
+      button.btn.btn-primary(type="submit", value="edit") Edit User

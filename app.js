@@ -46,6 +46,7 @@ app.use(flash());
 // that it is accessible everywhere in the app
 app.use((req, res, next) => {
   res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
   next();
 });
 

@@ -19,9 +19,16 @@ block content
           td!=user.username
           td!=user.email
           td
-            a(href="delete/") Edit
+            a(href=`editUser/${user.id}`) Edit
           td
-            a Delete
+            a(href=`deleteUser/${user.id}`) Delete
   
   else
     div The are no users...
+  
+  // import toast mixin
+  include mixins/toast
+  // mixin to render messages
+  +toast(success, false)
+  +toast(errors, true)
+

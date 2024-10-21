@@ -50,7 +50,7 @@ app.use(flash());
 // Storing the error to res.locals.error so
 // that it is accessible everywhere in the app
 app.use((req, res, next) => {
-  res.locals.error = req.flash("error");
+  res.locals.errors = req.flash("error");
   res.locals.success = req.flash("success");
   next();
 });
@@ -111,4 +111,21 @@ How to check if "admin"?
 Realized that a better way to do this
 is to check the role at "/home" and
 render different pages according to role
+*/
+
+/*
+HOW TO IMPLEMENT SEARCH
+I am thinking about a search feature that
+makes use of debouncing.
+There will be a search bar on top of the
+users table. And when something is typed
+into the search bar, the users should be
+filtered.
+
+Fields to include in filter query:
+  - name
+  - email
+
+I think I should first implement a normal
+search that does not make use of debouncing.
 */

@@ -5,6 +5,12 @@ block content
     h1 ADMIN PAGE
     h2 Welcome #{name}
     if users
+      // Search bar
+      form.d-flex.align-items-center.mb-2(action="/home", method="POST")
+        input.form-control.mb-0(type="text" name="searchText" placeholder="Search for user")
+        button.btn.btn-primary(type="submit", value="login") Search
+
+      // User table
       table.table.table-striped.table-hover
         thead  
           tr 
@@ -15,7 +21,7 @@ block content
             th
         for user in users
           tr
-            td!=user.id
+            td!=user._id
             td!=user.username
             td!=user.email
             td
@@ -28,12 +34,15 @@ block content
     else
       div The are no users...
     
+
     a(href="/createUser")
       button.btn.btn-primary Create new user
 
-    a.mt-auto(href="/logout")
-      button.btn.btn-primary Log Out
+    form.mt-auto.d-flex.justify-content-center(action="/logout" method="POST")
+      button.btn.btn-primary(type="submit") Log Out
     
+    // error &  success messages
+
     // import toast mixin
     include mixins/toast
     include mixins/toastScript

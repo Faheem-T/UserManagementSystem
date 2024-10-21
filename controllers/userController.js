@@ -1,6 +1,7 @@
 import { hashPassword } from "../helpers/hashPassword.js";
 import { User } from "../models/userModel.js";
 
+// Handle user signup on POST
 export const user_signup_post = async (req, res) => {
   const { body } = req;
   body.password = hashPassword(body.password);
@@ -16,44 +17,69 @@ export const user_signup_post = async (req, res) => {
   }
 };
 
+// Handle user signup on GET
 export const user_signup_get = (req, res) => {
   if (req.isAuthenticated()) return res.redirect("/home");
   res.render("signup", {
     title: "Sign Up",
-    errors: res.locals.error,
     action: "/signup",
   });
 };
 
+// Handle user login on POST
 export const user_login_post = (req, res) => {
   console.log(req.user);
   res.status(200).redirect("/home");
 };
 
+// Handle user login on GET
 export const user_login_get = (req, res) => {
   if (req.isAuthenticated()) return res.redirect("/home");
   res.render("login", {
     title: "Login",
-    errors: res.locals.error,
-    success: res.locals.success,
   });
 };
 
+// Handle home on GET
 export const user_home_get = async (req, res) => {
   const name = req.user.username;
   if (req.user.role === "admin") {
-    const users = await User.find({ role: "user" });
+    let users;
+    // req.session.users is empty => a search has not been done
+    // so render all users
+    if (!req.session.users) {
+      users = await User.find({ role: "user" });
+    } else {
+      // otherwise, render users matching search
+      users = req.session.users;
+      delete req.session["users"];
+    }
     return res.render("adminPage", {
-      users,
       name,
-      success: res.locals.success,
-      errors: res.locals.error,
+      users,
     });
   }
   return res.render("userPage", { name });
 };
 
-export const user_logout_get = (req, res) => {
+// Handle home on POST
+export const user_home_post = async (req, res) => {
+  const { searchText } = req.body;
+  // render all users if seach is empty
+  if (!searchText) return res.redirect("/home");
+  const users = await User.find({
+    role: "user",
+    $or: [
+      { name: { $regex: String(searchText) } },
+      { email: { $regex: String(searchText) } },
+    ],
+  });
+  req.session.users = users;
+  res.redirect("/home");
+};
+
+// Handle user logout on post
+export const user_logout_post = (req, res) => {
   req.logout((err) => {
     if (err) {
       console.log("error");
@@ -64,6 +90,7 @@ export const user_logout_get = (req, res) => {
   });
 };
 
+// Handle user delete on GET
 export const user_delete_get = async (req, res) => {
   if (!(req.user.role === "admin")) res.redirect("/");
   const { id } = req.params;
@@ -80,6 +107,7 @@ export const user_delete_get = async (req, res) => {
   res.redirect("/home");
 };
 
+// Handle user edit on GET
 export const user_edit_get = async (req, res) => {
   if (!(req.user.role === "admin")) res.redirect("/");
   const { id } = req.params;
@@ -93,6 +121,7 @@ export const user_edit_get = async (req, res) => {
   }
 };
 
+// Handle user edit on POST
 export const user_edit_post = async (req, res) => {
   const { id, username, email } = req.body;
   try {
@@ -107,10 +136,12 @@ export const user_edit_post = async (req, res) => {
   }
 };
 
+// Handle user create on GET
 export const user_create_get = (req, res) => {
   res.render("userCreate", { title: "Create new user", action: "/createUser" });
 };
 
+// Handle user create on POST
 export const user_create_post = async (req, res) => {
   const { body } = req;
   body.password = hashPassword(body.password);

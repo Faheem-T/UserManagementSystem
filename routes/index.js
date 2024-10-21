@@ -8,9 +8,10 @@ import {
   user_edit_get,
   user_edit_post,
   user_home_get,
+  user_home_post,
   user_login_get,
   user_login_post,
-  user_logout_get,
+  user_logout_post,
   user_signup_get,
   user_signup_post,
 } from "../controllers/userController.js";
@@ -38,10 +39,11 @@ router.post(
 router.get("/login", user_login_get);
 
 // logout
-router.get("/logout", authenticationMiddleware(), user_logout_get);
+router.post("/logout", authenticationMiddleware(), user_logout_post);
 
 // home
 router.get("/home", authenticationMiddleware(), user_home_get);
+router.post("/home", authenticationMiddleware(), user_home_post);
 
 // delete user
 router.get("/deleteUser/:id", authenticationMiddleware(), user_delete_get);

@@ -18,6 +18,8 @@ block content
           
   // import toast mixin
   include mixins/toast
-  // mixin to render error
+  include mixins/toastScript
+  // mixin to render messages
   +toast(errors, true)
   +toast(success, false)
+  +toastScript()

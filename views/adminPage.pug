@@ -1,10 +1,9 @@
 extends layout
 
 block content
-  .d-flex.flex-column.align-items-center.justify-content-center.p-5
+  .d-flex.flex-column.align-items-center.justify-content-center.p-5.vh-100
     h1 ADMIN PAGE
     h2 Welcome #{name}
-    a(href="/logout") Log Out
     if users
       table.table.table-striped.table-hover
         thead  
@@ -20,16 +19,26 @@ block content
             td!=user.username
             td!=user.email
             td
-              a(href=`editUser/${user.id}`) Edit
+              a(href=`editUser/${user.id}`) 
+                button.btn.btn-primary Edit
             td
-              a(href=`deleteUser/${user.id}`) Delete
+              a(href=`deleteUser/${user.id}`)
+                button.btn.btn-primary Delete
     
     else
       div The are no users...
     
+    a(href="/createUser")
+      button.btn.btn-primary Create new user
+
+    a.mt-auto(href="/logout")
+      button.btn.btn-primary Log Out
+    
     // import toast mixin
     include mixins/toast
+    include mixins/toastScript
     // mixin to render messages
     +toast(success, false)
     +toast(errors, true)
+    +toastScript()
 

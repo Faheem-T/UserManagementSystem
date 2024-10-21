@@ -2,6 +2,8 @@ import { Router } from "express";
 import passport from "passport";
 
 import {
+  user_create_get,
+  user_create_post,
   user_delete_get,
   user_edit_get,
   user_edit_post,
@@ -47,5 +49,9 @@ router.get("/deleteUser/:id", authenticationMiddleware(), user_delete_get);
 // edit user
 router.get("/editUser/:id", authenticationMiddleware(), user_edit_get);
 router.post("/editUser", authenticationMiddleware(), user_edit_post);
+
+// create user
+router.get("/createUser", authenticationMiddleware(), user_create_get);
+router.post("/createUser", authenticationMiddleware(), user_create_post);
 
 export default router;

@@ -18,7 +18,11 @@ export const user_signup_post = async (req, res) => {
 
 export const user_signup_get = (req, res) => {
   if (req.isAuthenticated()) return res.redirect("/home");
-  res.render("signup", { title: "Sign Up", errors: res.locals.error });
+  res.render("signup", {
+    title: "Sign Up",
+    errors: res.locals.error,
+    action: "/signup",
+  });
 };
 
 export const user_login_post = (req, res) => {
@@ -43,6 +47,7 @@ export const user_home_get = async (req, res) => {
       users,
       name,
       success: res.locals.success,
+      errors: res.locals.error,
     });
   }
   return res.render("userPage", { name });
@@ -99,5 +104,24 @@ export const user_edit_post = async (req, res) => {
     req.flash("error", "Error: something went wrong");
     res.status(400);
     req.redirect("/home");
+  }
+};
+
+export const user_create_get = (req, res) => {
+  res.render("userCreate", { title: "Create new user", action: "/createUser" });
+};
+
+export const user_create_post = async (req, res) => {
+  const { body } = req;
+  body.password = hashPassword(body.password);
+  const user = new User(body);
+  try {
+    await user.save();
+    req.flash("success", "User created successfully");
+    res.status(200).redirect("/home");
+  } catch (err) {
+    console.log(err);
+    req.flash("error", err.message);
+    res.status(400).redirect("/home");
   }
 };

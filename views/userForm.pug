@@ -3,7 +3,7 @@ extends layout
 block content
   div.container-fluid.d-flex.flex-column.align-items-center.justify-content-center#main
     h1!=title
-    form.d-flex.flex-column(action="/signup", method="POST")
+    form.d-flex.flex-column(action=`${action}`, method="POST")
       div.md-3
         label.form-label(for="username") Username
         input.form-control#username(type="text", name="username", required)
@@ -18,6 +18,6 @@ block content
         input.form-check-input#adminCheck(type="checkbox", value="admin", name="role")
         label.form-label(for="role") Admin?
 
-      button.btn.btn-primary(type="submit", value="SignUp")!=title
+      button.btn.btn-primary(type="submit", value="")!=title
       block inContainer
   block outsideContainer

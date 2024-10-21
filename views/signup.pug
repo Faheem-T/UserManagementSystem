@@ -8,5 +8,7 @@ block inContainer
 block outsideContainer
   // import toast mixin
   include mixins/toast
+  include mixins/toastScript
   // mixin to render error
   +toast(errors)
+  +toastScript()

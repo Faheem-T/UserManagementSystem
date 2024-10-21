@@ -5,6 +5,8 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import nocache from "nocache";
 import flash from "connect-flash";
+// Session storage
+import MongoStore from "connect-mongo";
 
 import router from "./routes/index.js";
 
@@ -36,6 +38,9 @@ app.use(
     secret: "BIGsecret",
     saveUninitialized: false,
     resave: false,
+    store: MongoStore.create({
+      client: mongoose.connection.getClient(),
+    }),
   })
 );
 app.use(nocache());
@@ -102,9 +107,8 @@ so from "/home" we check:
 
 How to check if "admin"?
   req.user.role
-*/
 
-/* 
-TODO
-  1) Add session storage
+Realized that a better way to do this
+is to check the role at "/home" and
+render different pages according to role
 */

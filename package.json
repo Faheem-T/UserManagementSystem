@@ -30,6 +30,7 @@
     "cookie-parser": "^1.4.7",
     "express": "^4.21.1",
     "express-session": "^1.18.1",
+    "express-validator": "^7.2.0",
     "mongoose": "^8.7.2",
     "morgan": "^1.10.0",
     "nocache": "^4.0.0",

@@ -2,7 +2,8 @@ extends layout
 
 block content
   div.container-fluid.d-flex.flex-column.align-items-center.justify-content-center#main
-    h1 LOGIN
+    h1 
+      strong LOGIN
     form.d-flex.flex-column(action="/login", method="POST")
       div.md-3
         label.form-label(for="username") Username

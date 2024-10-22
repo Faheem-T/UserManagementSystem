@@ -1,8 +1,9 @@
 extends layout
 
 block content
-  .d-flex.flex-column.align-items-center.justify-content-center.p-5
+  .d-flex.flex-column.align-items-center.justify-content-center.p-5.vh-100
     h1 USER Page
     h2 Welcome #{name}
-    a(href="/logout")
-      button.btn.btn-primary Log Out
+    p Your email is #{email}
+    form.d-flex.flex-column(action="/logout", method="POST")
+      button.btn.btn-primary(type="submit") Log Out

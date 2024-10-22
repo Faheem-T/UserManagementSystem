@@ -19,16 +19,31 @@ import {
 import { authenticationMiddleware } from "../helpers/authUser.js";
 
 import "../strategies/local-strategy.js";
+import { checkSchema } from "express-validator";
+import {
+  editUserValidation,
+  loginValidation,
+  searchValidation,
+  userFormValidation,
+} from "../helpers/validationScemas.js";
+import { validationErrorLoggerMiddleware } from "../helpers/validationErrorLogger.js";
 
 const router = Router();
 
 // signup
 router.get("/signup", user_signup_get);
-router.post("/signup", user_signup_post);
+router.post(
+  "/signup",
+  checkSchema(userFormValidation),
+  validationErrorLoggerMiddleware,
+  user_signup_post
+);
 
 // login
 router.post(
   "/login",
+  checkSchema(loginValidation),
+  validationErrorLoggerMiddleware,
   passport.authenticate("local", {
     failureFlash: true,
     failureRedirect: "/login",
@@ -43,17 +58,36 @@ router.post("/logout", authenticationMiddleware(), user_logout_post);
 
 // home
 router.get("/home", authenticationMiddleware(), user_home_get);
-router.post("/home", authenticationMiddleware(), user_home_post);
+// home post => user search
+router.post(
+  "/home",
+  authenticationMiddleware(),
+  checkSchema(searchValidation),
+  validationErrorLoggerMiddleware,
+  user_home_post
+);
 
 // delete user
 router.get("/deleteUser/:id", authenticationMiddleware(), user_delete_get);
 
 // edit user
 router.get("/editUser/:id", authenticationMiddleware(), user_edit_get);
-router.post("/editUser", authenticationMiddleware(), user_edit_post);
+router.post(
+  "/editUser",
+  authenticationMiddleware(),
+  checkSchema(editUserValidation),
+  validationErrorLoggerMiddleware,
+  user_edit_post
+);
 
 // create user
 router.get("/createUser", authenticationMiddleware(), user_create_get);
-router.post("/createUser", authenticationMiddleware(), user_create_post);
+router.post(
+  "/createUser",
+  authenticationMiddleware(),
+  checkSchema(userFormValidation),
+  validationErrorLoggerMiddleware,
+  user_create_post
+);
 
 export default router;

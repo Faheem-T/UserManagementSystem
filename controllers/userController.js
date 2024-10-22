@@ -1,9 +1,18 @@
+import { matchedData } from "express-validator";
 import { hashPassword } from "../helpers/hashPassword.js";
 import { User } from "../models/userModel.js";
 
 // Handle user signup on POST
 export const user_signup_post = async (req, res) => {
+  console.log("inside handler");
+
   const { body } = req;
+  console.log("body");
+  console.log(body);
+
+  console.log("matchedData");
+  console.log(matchedData(req));
+
   body.password = hashPassword(body.password);
   const user = new User(body);
   try {
@@ -21,7 +30,7 @@ export const user_signup_post = async (req, res) => {
 export const user_signup_get = (req, res) => {
   if (req.isAuthenticated()) return res.redirect("/home");
   res.render("signup", {
-    title: "Sign Up",
+    title: "SIGN UP",
     action: "/signup",
   });
 };
@@ -59,7 +68,7 @@ export const user_home_get = async (req, res) => {
       users,
     });
   }
-  return res.render("userPage", { name });
+  return res.render("userPage", { name, email: req.user.email });
 };
 
 // Handle home on POST
